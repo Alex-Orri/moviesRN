@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     headerText: {
         fontSize: 30,
         textAlign: "center",
-        margin: 5,
+        justifyContent: "center",
         color: "#ffffff"
     }
   });

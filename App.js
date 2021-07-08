@@ -1,17 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, SafeAreaView } from 'react-native';
 import Home from "./views/home/home"
 import Movies from "./views/home/movies"
 import styles from "./styles"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
+    <SafeAreaView style={{flex: 1}}>
+      <StatusBar
+        style="dark"
+        backgroundColor="#333333"
+      />
     <NavigationContainer>
       <Tab.Navigator tabBarOptions={{
        activeTintColor: '#00AEAE',
@@ -25,6 +30,7 @@ export default function App() {
         <Tab.Screen name="TV-Shows" component={Home} options={{tabBarIcon: ({color, size}) => (<Ionicons name="tv-outline" size={size} color={color}/>)}}/>
       </Tab.Navigator>
     </NavigationContainer>
+    </SafeAreaView>
   );
 }
 

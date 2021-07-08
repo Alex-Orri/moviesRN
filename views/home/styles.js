@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     categoryTitle: {
       color: "#FFFFFF", 
       fontSize: 25, 
-      backgroundColor: "#222222"
+      backgroundColor: "#222222",
+      padding: 10
     }
   });
 

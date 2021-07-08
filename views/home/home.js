@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import { View, Text, ScrollView, ActivityIndicator, Image } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, Image, TouchableOpacity, Modal } from "react-native";
 import Header from "../../components/header/header"
 import styles from "./styles"
+import MyModal from "../../components/myModal/myModal"
 
 const Home = () => {
 
@@ -9,6 +10,10 @@ const Home = () => {
     const [popShows, setPopShows] = useState()
     const [ratdShows, setRatdShows] = useState()
     const [latestShows, setLatestShows] = useState()
+
+    const [modalInfo, setModalInfo] = useState()
+    const [modalVisible, setModalVisible] = useState(false)
+
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`)
@@ -34,10 +39,11 @@ const Home = () => {
     }, [])
 
 
+
     function displayCatg(catg){
         return catg.map((item, index) => {
             return (
-                <View key={index} style={styles.poster}>
+                <TouchableOpacity key={index} style={styles.poster} onPress={() => {setModalInfo(item); setModalVisible(!modalVisible)}}>
                     <Image 
                         style={styles.posterImage}
                         source={{
@@ -46,7 +52,7 @@ const Home = () => {
                           }}
                     />
                     <Text numberOfLines={1} style={styles.posterTitle}>{item.name}</Text>
-                </View>
+                </TouchableOpacity>
             )
         })
     }
@@ -54,6 +60,7 @@ const Home = () => {
 
     return(
         <View style={{flex: 1}}>
+            {modalVisible ? <MyModal visible={modalVisible} setVisible={setModalVisible} info={modalInfo}/> : null}
             <Header/>
             <View style={styles.body}>
                 <ScrollView style={{flex:1}}>

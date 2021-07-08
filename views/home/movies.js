@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react"
-import { View, Text, ScrollView, ActivityIndicator, Image } from "react-native"
+import { View, Text, ScrollView, ActivityIndicator, Image, TouchableOpacity } from "react-native"
 import Header from "../../components/header/header"
 import styles from "./styles"
+import MyModal from "../../components/myModal/myModal"
 
 const Movies = () => {
 
@@ -9,6 +10,9 @@ const Movies = () => {
     const [popMovs, setPopMovs] = useState()
     const [ratdMovs, setRatdMovs] = useState()
     const [upcomingMovs, setUpcomingMovs] = useState()
+
+    const [modalInfo, setModalInfo] = useState()
+    const [modalVisible, setModalVisible] = useState(false)
 
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`)
@@ -36,7 +40,7 @@ const Movies = () => {
     function displayCatg(catg){
         return catg.map((item, index) => {
             return (
-                <View key={index} style={styles.poster}>
+                <TouchableOpacity key={index} style={styles.poster} onPress={() => {setModalInfo(item); setModalVisible(!modalVisible)}}>
                     <Image 
                         style={styles.posterImage}
                         source={{
@@ -45,13 +49,14 @@ const Movies = () => {
                           }}
                     />
                     <Text numberOfLines={1} style={styles.posterTitle}>{item.original_title}</Text>
-                </View>
+                </TouchableOpacity>
             )
         })
     }
 
     return (
         <View style={{flex: 1}}>
+            {modalVisible ? <MyModal visible={modalVisible} setVisible={setModalVisible} info={modalInfo}/> : null}
             <Header/>
             <View style={styles.body}>
                 <ScrollView style={{flex:1}}>
